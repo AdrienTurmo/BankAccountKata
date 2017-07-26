@@ -3,24 +3,20 @@ import java.util.List;
 
 
 public class BankAccount {
-    private final Transactions transactions;
-    private BigDecimal amount;
+    private Transactions transactions;
 
     public BankAccount(DateProvider dateProvider) {
-        amount = BigDecimal.valueOf(0);
         transactions = new Transactions(dateProvider);
     }
 
     public double moneyStored() {
-        return amount.doubleValue();
+        return transactions.balance();
     }
 
     public void deposit(double amount) throws IncorrectAmountException {
         if (amount < 0) {
             throw new IncorrectAmountException();
         }
-        this.amount = this.amount.add(BigDecimal.valueOf(amount));
-
         transactions.addDeposit(amount);
     }
 
@@ -28,10 +24,9 @@ public class BankAccount {
         if (amount < 0) {
             throw new IncorrectAmountException();
         }
-        if (this.amount.compareTo(BigDecimal.valueOf(amount))<0){
+        if (moneyStored()<amount){
             throw new NotEnoughMoneyException();
         }
-        this.amount = this.amount.subtract(BigDecimal.valueOf(amount));
         transactions.addWithdrawal(amount);
     }
 
@@ -41,7 +36,7 @@ public class BankAccount {
 
 
     public List<?> getTransactions() {
-        return transactions.getOperations();
+        return transactions.getTransactionsAmount();
     }
 
     public List<String> getTransactionsDate() {

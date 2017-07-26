@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +17,6 @@ public class Transactions {
 
 
     public void addDeposit(double amount) {
-
         Transaction transaction = new Transaction(amount,OperationType.DEPOSIT,dateProvider.todaysDateAsString());
         transactions.add(transaction);
     }
@@ -32,7 +32,7 @@ public class Transactions {
                 .collect(Collectors.toList());
     }
 
-    public List<Double> getOperations() {
+    public List<Double> getTransactionsAmount() {
         return transactions.stream()
                 .map(t -> t.getAmount())
                 .collect(Collectors.toList());
@@ -42,5 +42,12 @@ public class Transactions {
         return transactions.stream()
                 .map(t -> t.getDate())
                 .collect(Collectors.toList());
+    }
+
+    public double balance() {
+        return transactions.stream()
+                .map(t -> t.getOperationType()== OperationType.WITHDRAWAL ? -t.getAmount() : t.getAmount())
+                .reduce((double) 0, (a, b) -> BigDecimal.valueOf(a).add(BigDecimal.valueOf(b)).doubleValue())
+                .doubleValue();
     }
 }
