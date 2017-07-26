@@ -1,11 +1,21 @@
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(MockitoJUnitRunner.class)
 public class BankAccountTest {
 
     private BankAccount bankAccount;
+
+    @Mock
+    AccountPrinter printer;
 
     @Before
     public void setUp() throws Exception {
@@ -19,7 +29,7 @@ public class BankAccountTest {
 
     @Test
     public void should_store_a_deposit_with_a_positive_amount_of_money() throws Exception {
-    bankAccount.deposit(2);
+        bankAccount.deposit(2);
 
         assertThat(bankAccount.moneyStored()).isEqualTo(2);
     }
@@ -57,5 +67,16 @@ public class BankAccountTest {
         bankAccount.deposit(2);
 
         bankAccount.withdraw(3);
+    }
+
+    @Test
+    public void should_store_type_of_transaction() throws Exception {
+        bankAccount.deposit(2);
+        bankAccount.withdraw(1);
+        bankAccount.deposit(3);
+
+        List<OperationType> expectedOperations = Arrays.asList(OperationType.DEPOSIT,OperationType.WITHDRAWAL,OperationType.DEPOSIT);
+
+        assertThat(bankAccount.getOperations()).isEqualTo(expectedOperations);
     }
 }
