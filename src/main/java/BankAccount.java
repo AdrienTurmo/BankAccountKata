@@ -18,7 +18,10 @@ public class BankAccount {
         this.amount = this.amount.add(BigDecimal.valueOf(amount));
     }
 
-    public void withdraw(double amount) {
+    public void withdraw(double amount) throws IncorrectAmountException {
+        if (amount < 0) {
+            throw new IncorrectAmountException();
+        }
         this.amount = this.amount.subtract(BigDecimal.valueOf(amount));
     }
 }
