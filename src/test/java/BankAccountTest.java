@@ -51,4 +51,11 @@ public class BankAccountTest {
     public void should_not_be_able_to_withdraw_a_negative_amount_of_money() throws Exception {
         bankAccount.withdraw(-2);
     }
+
+    @Test(expected = NotEnoughMoneyException.class)
+    public void should_not_be_able_to_withdraw_more_money_tha_money_stored() throws Exception {
+        bankAccount.deposit(2);
+
+        bankAccount.withdraw(3);
+    }
 }
