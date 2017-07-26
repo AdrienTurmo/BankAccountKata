@@ -5,10 +5,12 @@ import java.util.List;
 
 public class BankAccount {
     private BigDecimal amount;
-    private List<OperationType> operations;
+    private List<OperationType> operationsType;
+    private List<Double> operations;
 
     public BankAccount() {
         amount = BigDecimal.valueOf(0);
+        operationsType = new ArrayList();
         operations = new ArrayList();
     }
 
@@ -21,7 +23,8 @@ public class BankAccount {
             throw new IncorrectAmountException();
         }
         this.amount = this.amount.add(BigDecimal.valueOf(amount));
-        operations.add(OperationType.DEPOSIT);
+        operationsType.add(OperationType.DEPOSIT);
+        operations.add(amount);
     }
 
     public void withdraw(double amount) throws Exception {
@@ -32,10 +35,16 @@ public class BankAccount {
             throw new NotEnoughMoneyException();
         }
         this.amount = this.amount.subtract(BigDecimal.valueOf(amount));
-        operations.add(OperationType.WITHDRAWAL);
+        operationsType.add(OperationType.WITHDRAWAL);
+        operations.add(amount);
     }
 
-    public List<OperationType> getOperations() {
+    public List<OperationType> getOperationsType() {
+        return operationsType;
+    }
+
+
+    public List<?> getOperations() {
         return operations;
     }
 }

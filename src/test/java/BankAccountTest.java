@@ -70,13 +70,23 @@ public class BankAccountTest {
     }
 
     @Test
+    public void should_store_each_transaction_individually() throws Exception {
+        bankAccount.deposit(5);
+        bankAccount.withdraw(2);
+
+        List<Double> expectedOperations = Arrays.asList(5.0,2.0);
+
+        assertThat(bankAccount.getOperations()).isEqualTo(expectedOperations);
+    }
+
+    @Test
     public void should_store_type_of_transaction() throws Exception {
         bankAccount.deposit(2);
         bankAccount.withdraw(1);
         bankAccount.deposit(3);
 
-        List<OperationType> expectedOperations = Arrays.asList(OperationType.DEPOSIT,OperationType.WITHDRAWAL,OperationType.DEPOSIT);
+        List<OperationType> expectedOperationsType = Arrays.asList(OperationType.DEPOSIT,OperationType.WITHDRAWAL,OperationType.DEPOSIT);
 
-        assertThat(bankAccount.getOperations()).isEqualTo(expectedOperations);
+        assertThat(bankAccount.getOperationsType()).isEqualTo(expectedOperationsType);
     }
 }
