@@ -1,17 +1,13 @@
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class BankAccount {
+    private final Transactions transactions = new Transactions();
     private BigDecimal amount;
-    private List<OperationType> operationsType;
-    private List<Double> operations;
 
     public BankAccount() {
         amount = BigDecimal.valueOf(0);
-        operationsType = new ArrayList();
-        operations = new ArrayList();
     }
 
     public double moneyStored() {
@@ -23,8 +19,8 @@ public class BankAccount {
             throw new IncorrectAmountException();
         }
         this.amount = this.amount.add(BigDecimal.valueOf(amount));
-        operationsType.add(OperationType.DEPOSIT);
-        operations.add(amount);
+
+        transactions.addDeposit(amount);
     }
 
     public void withdraw(double amount) throws Exception {
@@ -35,16 +31,15 @@ public class BankAccount {
             throw new NotEnoughMoneyException();
         }
         this.amount = this.amount.subtract(BigDecimal.valueOf(amount));
-        operationsType.add(OperationType.WITHDRAWAL);
-        operations.add(amount);
+        transactions.addWithdrawal(amount);
     }
 
     public List<OperationType> getOperationsType() {
-        return operationsType;
+        return transactions.getOperationsType();
     }
 
 
-    public List<?> getOperations() {
-        return operations;
+    public List<?> getTransactions() {
+        return transactions.getOperations();
     }
 }
