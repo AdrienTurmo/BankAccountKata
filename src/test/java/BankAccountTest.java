@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BankAccountTest {
@@ -16,10 +17,12 @@ public class BankAccountTest {
 
     @Mock
     AccountPrinter printer;
+    @Mock
+    DateProvider dateProvider;
 
     @Before
     public void setUp() throws Exception {
-        bankAccount = new BankAccount();
+        bankAccount = new BankAccount(dateProvider);
     }
 
     @Test
@@ -88,5 +91,16 @@ public class BankAccountTest {
         List<OperationType> expectedTransactionsType = Arrays.asList(OperationType.DEPOSIT,OperationType.WITHDRAWAL,OperationType.DEPOSIT);
 
         assertThat(bankAccount.getOperationsType()).isEqualTo(expectedTransactionsType);
+    }
+
+    @Test
+    public void should_store_the_date_of_transaction() throws Exception {
+        when(dateProvider.todaysDateAsString()).thenReturn("26-07-2017");
+        bankAccount.deposit(2);
+        bankAccount.withdraw(1);
+
+        List<String> expectedTransactionsDate = Arrays.asList("26-07-2017","26-07-2017");
+
+        assertThat(bankAccount.getTransactionsDate()).isEqualTo(expectedTransactionsDate);
     }
 }

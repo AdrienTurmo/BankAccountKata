@@ -3,11 +3,12 @@ import java.util.List;
 
 
 public class BankAccount {
-    private final Transactions transactions = new Transactions();
+    private final Transactions transactions;
     private BigDecimal amount;
 
-    public BankAccount() {
+    public BankAccount(DateProvider dateProvider) {
         amount = BigDecimal.valueOf(0);
+        transactions = new Transactions(dateProvider);
     }
 
     public double moneyStored() {
@@ -41,5 +42,9 @@ public class BankAccount {
 
     public List<?> getTransactions() {
         return transactions.getOperations();
+    }
+
+    public List<String> getTransactionsDate() {
+        return transactions.getTransactionsDate();
     }
 }
