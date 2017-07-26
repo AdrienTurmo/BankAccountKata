@@ -1,15 +1,17 @@
+import java.math.BigDecimal;
+
 public class BankAccount {
-    private int amount;
+    private BigDecimal amount;
 
     public BankAccount() {
-        amount = 0;
+        amount = BigDecimal.valueOf(0);
     }
 
-    public int moneyStored() {
-        return amount;
+    public double moneyStored() {
+        return amount.doubleValue();
     }
 
-    public void depositOf(int amount) {
-        this.amount = amount;
+    public void depositOf(double amount) {
+        this.amount = this.amount.add(BigDecimal.valueOf(amount));
     }
 }

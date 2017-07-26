@@ -23,4 +23,12 @@ public class BankAccountTest {
 
         assertThat(bankAccount.moneyStored()).isEqualTo(2);
     }
+
+    @Test
+    public void should_store_the_total_of_two_deposit() throws Exception {
+        bankAccount.depositOf(2);
+        bankAccount.depositOf(3.5);
+
+        assertThat(bankAccount.moneyStored()).isEqualTo(5.5);
+    }
 }
