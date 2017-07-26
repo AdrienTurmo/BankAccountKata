@@ -11,7 +11,10 @@ public class BankAccount {
         return amount.doubleValue();
     }
 
-    public void deposit(double amount) {
+    public void deposit(double amount) throws IncorrectAmountException {
+        if (amount < 0) {
+            throw new IncorrectAmountException();
+        }
         this.amount = this.amount.add(BigDecimal.valueOf(amount));
     }
 

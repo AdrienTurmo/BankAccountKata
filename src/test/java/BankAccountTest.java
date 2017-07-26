@@ -19,7 +19,7 @@ public class BankAccountTest {
 
     @Test
     public void should_store_a_deposit_with_a_positive_amount_of_money() throws Exception {
-        bankAccount.deposit(2);
+    bankAccount.deposit(2);
 
         assertThat(bankAccount.moneyStored()).isEqualTo(2);
     }
@@ -40,4 +40,10 @@ public class BankAccountTest {
 
         assertThat(bankAccount.moneyStored()).isEqualTo(1.7);
     }
+
+    @Test(expected = IncorrectAmountException.class)
+    public void should_not_be_able_to_deposit_a_negative_amount_of_money() throws Exception {
+        bankAccount.deposit(-2);
+    }
+
 }
