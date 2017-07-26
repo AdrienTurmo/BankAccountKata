@@ -19,16 +19,25 @@ public class BankAccountTest {
 
     @Test
     public void should_store_a_deposit_with_a_positive_amount_of_money() throws Exception {
-        bankAccount.depositOf(2);
+        bankAccount.deposit(2);
 
         assertThat(bankAccount.moneyStored()).isEqualTo(2);
     }
 
     @Test
     public void should_store_the_total_of_two_deposit() throws Exception {
-        bankAccount.depositOf(2);
-        bankAccount.depositOf(3.5);
+        bankAccount.deposit(2);
+        bankAccount.deposit(3.5);
 
         assertThat(bankAccount.moneyStored()).isEqualTo(5.5);
+    }
+
+    @Test
+    public void should_withdraw_an_not_empty_account() throws Exception {
+        bankAccount.deposit(5);
+
+        bankAccount.withdraw(3.3);
+
+        assertThat(bankAccount.moneyStored()).isEqualTo(1.7);
     }
 }

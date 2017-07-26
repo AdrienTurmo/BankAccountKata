@@ -11,7 +11,11 @@ public class BankAccount {
         return amount.doubleValue();
     }
 
-    public void depositOf(double amount) {
+    public void deposit(double amount) {
         this.amount = this.amount.add(BigDecimal.valueOf(amount));
+    }
+
+    public void withdraw(double amount) {
+        this.amount = this.amount.subtract(BigDecimal.valueOf(amount));
     }
 }
