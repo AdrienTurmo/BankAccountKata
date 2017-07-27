@@ -22,7 +22,7 @@ public class OperationsHistoryTest {
 
     @Test
     public void should_add_a_deposit_with_correct_amount_and_date() throws Exception {
-        Operation expectedOperation = new Operation(10.,OperationType.DEPOSIT,"26-07-2017");
+        Operation expectedOperation = new Operation(10., OperationType.DEPOSIT,"26-07-2017");
         when(dateProvider.todaysDateAsString()).thenReturn("26-07-2017");
 
         operationsHistory.addDeposit(10.);
@@ -33,7 +33,7 @@ public class OperationsHistoryTest {
 
     @Test
     public void should_add_a_withdrawal_with_correct_amount_and_date() throws Exception {
-        Operation expectedOperation = new Operation(100.,OperationType.WITHDRAWAL,"27-07-2017");
+        Operation expectedOperation = new Operation(100., OperationType.WITHDRAWAL,"27-07-2017");
         when(dateProvider.todaysDateAsString()).thenReturn("27-07-2017");
 
         operationsHistory.addWithdrawal(100.);
@@ -45,8 +45,8 @@ public class OperationsHistoryTest {
     @Test
     public void should_calculate_the_balance() throws Exception {
         operationsHistory.addDeposit(100.);
-        operationsHistory.addWithdrawal(50.);
+        operationsHistory.addWithdrawal(40.);
 
-        assertThat(operationsHistory.balance()).isEqualTo(50.);
+        assertThat(operationsHistory.balance()).isEqualTo(60.);
     }
 }

@@ -3,12 +3,10 @@ import exceptions.NotEnoughMoneyException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InOrder;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,18 +17,16 @@ import static org.mockito.Mockito.when;
 public class BankAccountTest {
 
     private BankAccount bankAccount;
-    private OperationsHistoryPrinter operationsHistoryPrinter;
 
-    @Mock
-    Printer printer;
     @Mock
     DateProvider dateProvider;
     @Mock
     OperationsHistory operationsHistory;
+    @Mock
+    OperationsHistoryPrinter operationsHistoryPrinter;
 
     @Before
     public void setUp() throws Exception {
-        operationsHistoryPrinter = new OperationsHistoryPrinter(printer);
         bankAccount = new BankAccount(operationsHistory, operationsHistoryPrinter);
     }
 
@@ -84,10 +80,10 @@ public class BankAccountTest {
     }
 
     @Test
-    public void historyPrinter_print_a_transaction_after_the_header() throws Exception {
+    public void historyPrinter_print_operationHistory() throws Exception {
         bankAccount.printOperationsHistory();
 
-        operationsHistoryPrinter.print(operationsHistory);
+        verify(operationsHistoryPrinter).print(operationsHistory);
     }
 
 }

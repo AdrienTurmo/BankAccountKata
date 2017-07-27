@@ -1,8 +1,6 @@
 import exceptions.IncorrectAmountException;
 import exceptions.NotEnoughMoneyException;
 
-import java.util.List;
-
 
 public class BankAccount {
     private OperationsHistory operationsHistory;
