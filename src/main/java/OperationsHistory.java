@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,6 +50,6 @@ public class OperationsHistory {
     }
 
     public List<Operation> getOperations() {
-        return operations;
+        return new ArrayList(operations);
     }
 }
