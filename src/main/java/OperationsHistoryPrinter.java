@@ -1,10 +1,8 @@
-import org.assertj.core.util.Lists;
-
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
-public class OperationsHistoryPrinter {
+class OperationsHistoryPrinter {
 
     private static final String HEADER = "DATE | OPERATION | AMOUNT | BALANCE";
     private static final String LINE_TEMPLATE = "%s | %s | %s€ | %s€";

@@ -2,8 +2,8 @@ import exceptions.IncorrectAmountException;
 import exceptions.NotEnoughMoneyException;
 
 
-public class BankAccount {
-    private OperationsHistory operationsHistory;
+class BankAccount {
+    private final OperationsHistory operationsHistory;
     private final OperationsHistoryPrinter operationsHistoryPrinter;
 
     public BankAccount(OperationsHistory operationsHistory, OperationsHistoryPrinter operationsHistoryPrinter) {

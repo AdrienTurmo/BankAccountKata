@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Operation {
+class Operation {
     private final Double amount;
     private final OperationType operationType;
     private final String date;

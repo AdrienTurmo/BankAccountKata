@@ -1,3 +1,3 @@
-public interface DateProvider {
+interface DateProvider {
     String todaysDateAsString();
 }

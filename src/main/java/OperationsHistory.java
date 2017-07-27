@@ -3,9 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class OperationsHistory {
+class OperationsHistory {
     private final DateProvider dateProvider;
-    private List<Operation> operations;
+    private final List<Operation> operations;
 
     OperationsHistory(DateProvider dateProvider) {
         this.dateProvider = dateProvider;

@@ -1,4 +1,4 @@
-public interface Printer {
+interface Printer {
 
     void print(String text);
 
