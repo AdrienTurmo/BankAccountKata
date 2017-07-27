@@ -31,8 +31,7 @@ class OperationsHistory {
     }
 
     List<Operation> getOperationsFromNewestToOldest() {
-        List<Operation> revertedOperations = new ArrayList<>();
-        operations.forEach(operation -> revertedOperations.add(operation));
+        List<Operation> revertedOperations = new ArrayList<>(operations);
         Collections.reverse(revertedOperations);
         return revertedOperations;
     }
