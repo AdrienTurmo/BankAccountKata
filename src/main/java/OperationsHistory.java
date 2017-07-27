@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -29,7 +30,11 @@ class OperationsHistory {
                 .reduce((double) 0, (a, b) -> BigDecimal.valueOf(a).add(BigDecimal.valueOf(b)).doubleValue());
     }
 
-    List<Operation> getOperations() {
-        return operations;
+    List<Operation> getOperationsFromNewestToOldest() {
+        List<Operation> revertedOperations = new ArrayList<>();
+        operations.forEach(operation -> revertedOperations.add(operation));
+        Collections.reverse(revertedOperations);
+        return revertedOperations;
     }
+
 }

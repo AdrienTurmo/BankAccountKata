@@ -28,8 +28,8 @@ public class OperationsHistoryTest {
 
         operationsHistory.addDeposit(10.);
 
-        assertThat(operationsHistory.getOperations().size()).isEqualTo(1);
-        assertThat(operationsHistory.getOperations()).contains(expectedOperation);
+        assertThat(operationsHistory.getOperationsFromNewestToOldest().size()).isEqualTo(1);
+        assertThat(operationsHistory.getOperationsFromNewestToOldest()).contains(expectedOperation);
     }
 
     @Test
@@ -39,8 +39,8 @@ public class OperationsHistoryTest {
 
         operationsHistory.addWithdrawal(100.);
 
-        assertThat(operationsHistory.getOperations().size()).isEqualTo(1);
-        assertThat(operationsHistory.getOperations()).contains(expectedOperation);
+        assertThat(operationsHistory.getOperationsFromNewestToOldest().size()).isEqualTo(1);
+        assertThat(operationsHistory.getOperationsFromNewestToOldest()).contains(expectedOperation);
     }
 
     @Test

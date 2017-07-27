@@ -14,10 +14,9 @@ class OperationsHistoryPrinter {
 
     public void print(OperationsHistory operationsHistory) {
         BigDecimal[] balance = {BigDecimal.valueOf(operationsHistory.balance())};
-        List<Operation> operations = operationsHistory.getOperations();
+        List<Operation> operations = operationsHistory.getOperationsFromNewestToOldest();
 
         printer.print(HEADER);
-        Collections.reverse(operations);
         operations.forEach(operation -> balance[0] = printLine(operation, balance[0]));
     }
 
