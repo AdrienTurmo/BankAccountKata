@@ -1,4 +1,4 @@
 package exceptions;
 
-public class IncorrectAmountException extends Exception {
+public class IncorrectAmountException extends RuntimeException {
 }

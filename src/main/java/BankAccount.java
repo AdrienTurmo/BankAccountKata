@@ -6,7 +6,7 @@ class BankAccount {
     private final OperationsHistory operationsHistory;
     private final OperationsHistoryPrinter operationsHistoryPrinter;
 
-    public BankAccount(OperationsHistory operationsHistory, OperationsHistoryPrinter operationsHistoryPrinter) {
+    BankAccount(OperationsHistory operationsHistory, OperationsHistoryPrinter operationsHistoryPrinter) {
         this.operationsHistory = operationsHistory;
         this.operationsHistoryPrinter = operationsHistoryPrinter;
     }
@@ -15,14 +15,14 @@ class BankAccount {
         return operationsHistory.balance();
     }
 
-    public void deposit(double amount) throws IncorrectAmountException {
+    void deposit(double amount) throws IncorrectAmountException {
         if (amount < 0) {
             throw new IncorrectAmountException();
         }
         operationsHistory.addDeposit(amount);
     }
 
-    public void withdraw(double amount) throws Exception {
+    void withdraw(double amount) throws IncorrectAmountException,NotEnoughMoneyException {
         if (amount < 0) {
             throw new IncorrectAmountException();
         }
@@ -32,7 +32,7 @@ class BankAccount {
         operationsHistory.addWithdrawal(amount);
     }
 
-    public void printOperationsHistory() {
+    void printOperationsHistory() {
         operationsHistoryPrinter.print(operationsHistory);
     }
 }
