@@ -26,7 +26,6 @@ public class OperationsHistoryPrinter {
         Double operationAmount = operation.getAmount();
         OperationType operationType = operation.getOperationType();
 
-
         String line = String.format(LINE_TEMPLATE,
                 operation.getDate(),
                 operationType,

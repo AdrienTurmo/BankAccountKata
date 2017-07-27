@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Operation {
     private Double amount;
     private OperationType operationType;
@@ -19,5 +21,20 @@ public class Operation {
 
     public String getDate() {
         return date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Operation operation = (Operation) o;
+        return Objects.equals(amount, operation.amount) &&
+                operationType == operation.operationType &&
+                Objects.equals(date, operation.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, operationType, date);
     }
 }
