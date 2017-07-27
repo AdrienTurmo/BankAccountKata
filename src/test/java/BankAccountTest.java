@@ -3,7 +3,9 @@ import exceptions.NotEnoughMoneyException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
@@ -27,7 +29,7 @@ public class BankAccountTest {
     @Before
     public void setUp() throws Exception {
         transactionsHistoryPrinter = new OperationsHistoryPrinter(printer);
-        bankAccount = new BankAccount(dateProvider,transactionsHistoryPrinter);
+        bankAccount = new BankAccount(dateProvider, transactionsHistoryPrinter);
     }
 
     @Test
@@ -114,6 +116,18 @@ public class BankAccountTest {
     public void historyPrinter_always_print_header() throws Exception {
         bankAccount.printOperationsHistory();
 
-        verify(printer).print("DATE  | OPERATION | AMOUNT | BALANCE");
+        verify(printer).print("DATE | OPERATION | AMOUNT | BALANCE");
+    }
+
+    @Test
+    public void historyPrinter_print_a_transaction_after_the_header() throws Exception {
+        when(dateProvider.todaysDateAsString()).thenReturn("26-07-2017");
+        bankAccount.deposit(5);
+
+        bankAccount.printOperationsHistory();
+
+        InOrder printerOrder = Mockito.inOrder(printer);
+        printerOrder.verify(printer).print("DATE | OPERATION | AMOUNT | BALANCE");
+        printerOrder.verify(printer).print("26-07-2017 | DEPOSIT | 5.0€ | 5.0€");
     }
 }
