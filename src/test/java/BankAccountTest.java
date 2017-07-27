@@ -10,21 +10,24 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BankAccountTest {
 
     private BankAccount bankAccount;
+    private OperationsHistoryPrinter transactionsHistoryPrinter;
 
     @Mock
-    AccountPrinter printer;
+    Printer printer;
     @Mock
     DateProvider dateProvider;
 
     @Before
     public void setUp() throws Exception {
-        bankAccount = new BankAccount(dateProvider);
+        transactionsHistoryPrinter = new OperationsHistoryPrinter(printer);
+        bankAccount = new BankAccount(dateProvider,transactionsHistoryPrinter);
     }
 
     @Test
@@ -79,9 +82,9 @@ public class BankAccountTest {
         bankAccount.deposit(5);
         bankAccount.withdraw(2);
 
-        List<Double> expectedTransactions = Arrays.asList(5.0,2.0);
+        List<Double> expectedTransactions = Arrays.asList(5.0, 2.0);
 
-        assertThat(bankAccount.getTransactionsAmount()).isEqualTo(expectedTransactions);
+        assertThat(bankAccount.allOperationsAmount()).isEqualTo(expectedTransactions);
     }
 
     @Test
@@ -90,9 +93,9 @@ public class BankAccountTest {
         bankAccount.withdraw(1);
         bankAccount.deposit(3);
 
-        List<OperationType> expectedTransactionsType = Arrays.asList(OperationType.DEPOSIT,OperationType.WITHDRAWAL,OperationType.DEPOSIT);
+        List<OperationType> expectedTransactionsType = Arrays.asList(OperationType.DEPOSIT, OperationType.WITHDRAWAL, OperationType.DEPOSIT);
 
-        assertThat(bankAccount.getTransactionsType()).isEqualTo(expectedTransactionsType);
+        assertThat(bankAccount.allOperationsType()).isEqualTo(expectedTransactionsType);
     }
 
     @Test
@@ -102,8 +105,15 @@ public class BankAccountTest {
         when(dateProvider.todaysDateAsString()).thenReturn("27-07-2017");
         bankAccount.withdraw(1);
 
-        List<String> expectedTransactionsDate = Arrays.asList("26-07-2017","27-07-2017");
+        List<String> expectedTransactionsDate = Arrays.asList("26-07-2017", "27-07-2017");
 
-        assertThat(bankAccount.getTransactionsDate()).isEqualTo(expectedTransactionsDate);
+        assertThat(bankAccount.allOperationsDate()).isEqualTo(expectedTransactionsDate);
+    }
+
+    @Test
+    public void historyPrinter_always_print_header() throws Exception {
+        bankAccount.printOperationsHistory();
+
+        verify(printer).print("DATE  | OPERATION | AMOUNT | BALANCE");
     }
 }

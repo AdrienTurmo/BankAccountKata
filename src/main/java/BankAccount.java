@@ -5,21 +5,23 @@ import java.util.List;
 
 
 public class BankAccount {
-    private TransactionsHistory transactions;
+    private OperationsHistory operationsHistory;
+    private OperationsHistoryPrinter operationsHistoryPrinter;
 
-    public BankAccount(DateProvider dateProvider) {
-        transactions = new TransactionsHistory(dateProvider);
+    public BankAccount(DateProvider dateProvider, OperationsHistoryPrinter operationsHistoryPrinter) {
+        operationsHistory = new OperationsHistory(dateProvider);
+        this.operationsHistoryPrinter = operationsHistoryPrinter;
     }
 
     public double moneyStored() {
-        return transactions.balance();
+        return operationsHistory.balance();
     }
 
     public void deposit(double amount) throws IncorrectAmountException {
         if (amount < 0) {
             throw new IncorrectAmountException();
         }
-        transactions.addDeposit(amount);
+        operationsHistory.addDeposit(amount);
     }
 
     public void withdraw(double amount) throws Exception {
@@ -29,19 +31,22 @@ public class BankAccount {
         if (moneyStored()<amount){
             throw new NotEnoughMoneyException();
         }
-        transactions.addWithdrawal(amount);
+        operationsHistory.addWithdrawal(amount);
     }
 
-    public List<OperationType> getTransactionsType() {
-        return transactions.getOperationsType();
+    public List<OperationType> allOperationsType() {
+        return operationsHistory.allOperationsType();
     }
 
-
-    public List<?> getTransactionsAmount() {
-        return transactions.getTransactionsAmount();
+    public List<Double> allOperationsAmount() {
+        return operationsHistory.allTransactionsAmount();
     }
 
-    public List<String> getTransactionsDate() {
-        return transactions.getTransactionsDate();
+    public List<String> allOperationsDate() {
+        return operationsHistory.allTransactionsDate();
+    }
+
+    public void printOperationsHistory() {
+        operationsHistoryPrinter.print(operationsHistory);
     }
 }

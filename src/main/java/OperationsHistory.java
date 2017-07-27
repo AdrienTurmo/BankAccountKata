@@ -4,41 +4,41 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class TransactionsHistory {
+public class OperationsHistory {
     private DateProvider dateProvider;
-    private List<Transaction> transactions;
+    private List<Operation> transactions;
 
-    public TransactionsHistory(DateProvider dateProvider) {
+    public OperationsHistory(DateProvider dateProvider) {
         this.dateProvider = dateProvider;
         transactions = new ArrayList();
     }
 
 
     public void addDeposit(double amount) {
-        Transaction transaction = new Transaction(amount,OperationType.DEPOSIT,dateProvider.todaysDateAsString());
+        Operation transaction = new Operation(amount,OperationType.DEPOSIT,dateProvider.todaysDateAsString());
         transactions.add(transaction);
     }
 
     public void addWithdrawal(double amount) {
-        Transaction transaction = new Transaction(amount,OperationType.WITHDRAWAL,dateProvider.todaysDateAsString());
+        Operation transaction = new Operation(amount,OperationType.WITHDRAWAL,dateProvider.todaysDateAsString());
         transactions.add(transaction);
     }
 
-    public List<OperationType> getOperationsType() {
+    public List<OperationType> allOperationsType() {
         return transactions.stream()
-                .map(Transaction::getOperationType)
+                .map(Operation::getOperationType)
                 .collect(Collectors.toList());
     }
 
-    public List<Double> getTransactionsAmount() {
+    public List<Double> allTransactionsAmount() {
         return transactions.stream()
-                .map(Transaction::getAmount)
+                .map(Operation::getAmount)
                 .collect(Collectors.toList());
     }
 
-    public List<String> getTransactionsDate() {
+    public List<String> allTransactionsDate() {
         return transactions.stream()
-                .map(Transaction::getDate)
+                .map(Operation::getDate)
                 .collect(Collectors.toList());
     }
 
