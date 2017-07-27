@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -20,17 +19,20 @@ import static org.mockito.Mockito.when;
 public class BankAccountTest {
 
     private BankAccount bankAccount;
-    private OperationsHistoryPrinter transactionsHistoryPrinter;
+    private OperationsHistoryPrinter operationsHistoryPrinter;
 
     @Mock
     Printer printer;
     @Mock
     DateProvider dateProvider;
 
+
+
     @Before
     public void setUp() throws Exception {
-        transactionsHistoryPrinter = new OperationsHistoryPrinter(printer);
-        bankAccount = new BankAccount(dateProvider, transactionsHistoryPrinter);
+        operationsHistoryPrinter = new OperationsHistoryPrinter(printer);
+        OperationsHistory operationsHistory = new OperationsHistory(dateProvider);
+        bankAccount = new BankAccount(operationsHistory, operationsHistoryPrinter);
     }
 
     @Test

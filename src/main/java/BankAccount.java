@@ -8,8 +8,8 @@ public class BankAccount {
     private OperationsHistory operationsHistory;
     private OperationsHistoryPrinter operationsHistoryPrinter;
 
-    public BankAccount(DateProvider dateProvider, OperationsHistoryPrinter operationsHistoryPrinter) {
-        operationsHistory = new OperationsHistory(dateProvider);
+    public BankAccount(OperationsHistory operationsHistory, OperationsHistoryPrinter operationsHistoryPrinter) {
+        this.operationsHistory = operationsHistory;
         this.operationsHistoryPrinter = operationsHistoryPrinter;
     }
 
