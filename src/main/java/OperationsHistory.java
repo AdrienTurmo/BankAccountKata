@@ -48,7 +48,7 @@ public class OperationsHistory {
                 .reduce((double) 0, (a, b) -> BigDecimal.valueOf(a).add(BigDecimal.valueOf(b)).doubleValue());
     }
 
-    public void printHistory(OperationsHistoryPrinter operationsHistoryPrinter) {
-        operationsHistoryPrinter.print(operations);
+    public List<Operation> getOperations() {
+        return operations;
     }
 }

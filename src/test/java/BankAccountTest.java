@@ -130,4 +130,21 @@ public class BankAccountTest {
         printerOrder.verify(printer).print("DATE | OPERATION | AMOUNT | BALANCE");
         printerOrder.verify(printer).print("26-07-2017 | DEPOSIT | 5.0€ | 5.0€");
     }
+
+    @Test
+    public void historyPrinter_print_transactions_from_newest_to_oldest() throws Exception {
+        when(dateProvider.todaysDateAsString()).thenReturn("26-07-2017");
+        bankAccount.deposit(100);
+        bankAccount.deposit(900);
+        when(dateProvider.todaysDateAsString()).thenReturn("27-07-2017");
+        bankAccount.withdraw(500);
+
+        bankAccount.printOperationsHistory();
+
+        InOrder printerOrder = Mockito.inOrder(printer);
+        printerOrder.verify(printer).print("DATE | OPERATION | AMOUNT | BALANCE");
+        printerOrder.verify(printer).print("27-07-2017 | WITHDRAWAL | 500.0€ | 500.0€");
+        printerOrder.verify(printer).print("26-07-2017 | DEPOSIT | 900.0€ | 1000.0€");
+        printerOrder.verify(printer).print("26-07-2017 | DEPOSIT | 100.0€ | 100.0€");
+    }
 }

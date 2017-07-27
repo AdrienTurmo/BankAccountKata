@@ -1,3 +1,6 @@
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class OperationsHistoryPrinter {
@@ -10,16 +13,29 @@ public class OperationsHistoryPrinter {
         this.printer = printer;
     }
 
-    public void print(List<Operation> operations) {
+    public void print(OperationsHistory operationsHistory) {
+        BigDecimal[] balance = {BigDecimal.valueOf(operationsHistory.balance())};
+        List<Operation> operations = operationsHistory.getOperations();
+
         printer.print(HEADER);
         if (operations.size() > 0) {
-            printLine(operations);
+            Collections.reverse(operations);
+            operations.stream()
+                    .forEach(operation -> balance[0] = printLine(operation, balance[0]));
         }
     }
 
-    private void printLine(List<Operation> operations) {
-        Operation operation = operations.get(0);
-        String line = String.format(LINE_TEMPLATE, operation.getDate(), operation.getOperationType(), operation.getAmount(), operation.getAmount());
+    private BigDecimal printLine(Operation operation, BigDecimal balance) {
+        Double operationAmount = operation.getAmount();
+        OperationType operationType = operation.getOperationType();
+
+
+        String line = String.format(LINE_TEMPLATE,
+                operation.getDate(),
+                operationType,
+                operationAmount,
+                balance.doubleValue());
         printer.print(line);
+        return balance.subtract(BigDecimal.valueOf(operationType==OperationType.DEPOSIT ? operationAmount : -operationAmount));
     }
 }

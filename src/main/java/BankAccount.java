@@ -47,6 +47,6 @@ public class BankAccount {
     }
 
     public void printOperationsHistory() {
-        operationsHistory.printHistory(operationsHistoryPrinter);
+        operationsHistoryPrinter.print(operationsHistory);
     }
 }
