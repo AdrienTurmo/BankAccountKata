@@ -34,18 +34,6 @@ public class BankAccount {
         operationsHistory.addWithdrawal(amount);
     }
 
-    public List<OperationType> allOperationsType() {
-        return operationsHistory.allOperationsType();
-    }
-
-    public List<Double> allOperationsAmount() {
-        return operationsHistory.allTransactionsAmount();
-    }
-
-    public List<String> allOperationsDate() {
-        return operationsHistory.allTransactionsDate();
-    }
-
     public void printOperationsHistory() {
         operationsHistoryPrinter.print(operationsHistory);
     }

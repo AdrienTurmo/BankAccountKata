@@ -25,24 +25,6 @@ public class OperationsHistory {
         operations.add(transaction);
     }
 
-    public List<OperationType> allOperationsType() {
-        return operations.stream()
-                .map(Operation::getOperationType)
-                .collect(Collectors.toList());
-    }
-
-    public List<Double> allTransactionsAmount() {
-        return operations.stream()
-                .map(Operation::getAmount)
-                .collect(Collectors.toList());
-    }
-
-    public List<String> allTransactionsDate() {
-        return operations.stream()
-                .map(Operation::getDate)
-                .collect(Collectors.toList());
-    }
-
     public double balance() {
         return operations.stream()
                 .map(t -> t.getOperationType() == OperationType.WITHDRAWAL ? -t.getAmount() : t.getAmount())
