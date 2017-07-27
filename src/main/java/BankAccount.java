@@ -3,15 +3,15 @@ import exceptions.NotEnoughMoneyException;
 
 
 public class BankAccount {
-    private OperationsHistory operationsHistory;
-    private OperationsHistoryPrinter operationsHistoryPrinter;
+    private final OperationsHistory operationsHistory;
+    private final OperationsHistoryPrinter operationsHistoryPrinter;
 
     public BankAccount(OperationsHistory operationsHistory, OperationsHistoryPrinter operationsHistoryPrinter) {
         this.operationsHistory = operationsHistory;
         this.operationsHistoryPrinter = operationsHistoryPrinter;
     }
 
-    public double balance() {
+    double balance() {
         return operationsHistory.balance();
     }
 

@@ -6,7 +6,7 @@ public class OperationsHistoryPrinter {
 
     private static final String HEADER = "DATE | OPERATION | AMOUNT | BALANCE";
     private static final String LINE_TEMPLATE = "%s | %s | %s€ | %s€";
-    private Printer printer;
+    private final Printer printer;
 
     public OperationsHistoryPrinter(Printer printer) {
         this.printer = printer;
@@ -18,8 +18,7 @@ public class OperationsHistoryPrinter {
 
         printer.print(HEADER);
         Collections.reverse(operations);
-        operations.stream()
-                .forEach(operation -> balance[0] = printLine(operation, balance[0]));
+        operations.forEach(operation -> balance[0] = printLine(operation, balance[0]));
     }
 
     private BigDecimal printLine(Operation operation, BigDecimal balance) {

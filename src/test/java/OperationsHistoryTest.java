@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 public class OperationsHistoryTest {
 
     @Mock
+    private
     DateProvider dateProvider;
 
     private OperationsHistory operationsHistory;

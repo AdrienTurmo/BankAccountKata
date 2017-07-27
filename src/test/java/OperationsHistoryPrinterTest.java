@@ -13,8 +13,10 @@ import static org.mockito.Mockito.when;
 public class OperationsHistoryPrinterTest {
 
     @Mock
+    private
     DateProvider dateProvider;
     @Mock
+    private
     Printer printer;
 
     private OperationsHistoryPrinter operationsHistoryPrinter;

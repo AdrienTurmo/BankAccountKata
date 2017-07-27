@@ -1,25 +1,25 @@
 import java.util.Objects;
 
 public class Operation {
-    private Double amount;
-    private OperationType operationType;
-    private String date;
+    private final Double amount;
+    private final OperationType operationType;
+    private final String date;
 
-    public Operation(Double amount, OperationType operationType, String date) {
+    Operation(Double amount, OperationType operationType, String date) {
         this.amount = amount;
         this.operationType = operationType;
         this.date = date;
     }
 
-    public Double getAmount() {
+    Double getAmount() {
         return amount;
     }
 
-    public OperationType getOperationType() {
+    OperationType getOperationType() {
         return operationType;
     }
 
-    public String getDate() {
+    String getDate() {
         return date;
     }
 

@@ -4,32 +4,32 @@ import java.util.List;
 
 
 public class OperationsHistory {
-    private DateProvider dateProvider;
-    private List<Operation> operations;
+    private final DateProvider dateProvider;
+    private final List<Operation> operations;
 
-    public OperationsHistory(DateProvider dateProvider) {
+    OperationsHistory(DateProvider dateProvider) {
         this.dateProvider = dateProvider;
-        operations = new ArrayList();
+        operations = new ArrayList<>();
     }
 
 
-    public void addDeposit(double amount) {
+    void addDeposit(double amount) {
         Operation transaction = new Operation(amount,OperationType.DEPOSIT,dateProvider.todaysDateAsString());
         operations.add(transaction);
     }
 
-    public void addWithdrawal(double amount) {
+    void addWithdrawal(double amount) {
         Operation transaction = new Operation(amount,OperationType.WITHDRAWAL,dateProvider.todaysDateAsString());
         operations.add(transaction);
     }
 
-    public double balance() {
+    double balance() {
         return operations.stream()
                 .map(t -> t.getOperationType() == OperationType.WITHDRAWAL ? -t.getAmount() : t.getAmount())
                 .reduce((double) 0, (a, b) -> BigDecimal.valueOf(a).add(BigDecimal.valueOf(b)).doubleValue());
     }
 
-    public List<Operation> getOperations() {
-        return new ArrayList(operations);
+    List<Operation> getOperations() {
+        return new ArrayList<>(operations);
     }
 }
