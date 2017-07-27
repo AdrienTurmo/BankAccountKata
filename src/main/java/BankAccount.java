@@ -1,12 +1,14 @@
-import java.math.BigDecimal;
+import exceptions.IncorrectAmountException;
+import exceptions.NotEnoughMoneyException;
+
 import java.util.List;
 
 
 public class BankAccount {
-    private Transactions transactions;
+    private TransactionsHistory transactions;
 
     public BankAccount(DateProvider dateProvider) {
-        transactions = new Transactions(dateProvider);
+        transactions = new TransactionsHistory(dateProvider);
     }
 
     public double moneyStored() {
@@ -30,12 +32,12 @@ public class BankAccount {
         transactions.addWithdrawal(amount);
     }
 
-    public List<OperationType> getOperationsType() {
+    public List<OperationType> getTransactionsType() {
         return transactions.getOperationsType();
     }
 
 
-    public List<?> getTransactions() {
+    public List<?> getTransactionsAmount() {
         return transactions.getTransactionsAmount();
     }
 

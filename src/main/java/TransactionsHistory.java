@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class Transactions {
+public class TransactionsHistory {
     private DateProvider dateProvider;
-
     private List<Transaction> transactions;
 
-    public Transactions(DateProvider dateProvider) {
+    public TransactionsHistory(DateProvider dateProvider) {
         this.dateProvider = dateProvider;
-
         transactions = new ArrayList();
     }
 
@@ -28,26 +26,25 @@ public class Transactions {
 
     public List<OperationType> getOperationsType() {
         return transactions.stream()
-                .map(t -> t.getOperationType())
+                .map(Transaction::getOperationType)
                 .collect(Collectors.toList());
     }
 
     public List<Double> getTransactionsAmount() {
         return transactions.stream()
-                .map(t -> t.getAmount())
+                .map(Transaction::getAmount)
                 .collect(Collectors.toList());
     }
 
     public List<String> getTransactionsDate() {
         return transactions.stream()
-                .map(t -> t.getDate())
+                .map(Transaction::getDate)
                 .collect(Collectors.toList());
     }
 
     public double balance() {
         return transactions.stream()
-                .map(t -> t.getOperationType()== OperationType.WITHDRAWAL ? -t.getAmount() : t.getAmount())
-                .reduce((double) 0, (a, b) -> BigDecimal.valueOf(a).add(BigDecimal.valueOf(b)).doubleValue())
-                .doubleValue();
+                .map(t -> t.getOperationType() == OperationType.WITHDRAWAL ? -t.getAmount() : t.getAmount())
+                .reduce((double) 0, (a, b) -> BigDecimal.valueOf(a).add(BigDecimal.valueOf(b)).doubleValue());
     }
 }

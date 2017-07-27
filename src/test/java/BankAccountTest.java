@@ -1,3 +1,5 @@
+import exceptions.IncorrectAmountException;
+import exceptions.NotEnoughMoneyException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -79,7 +81,7 @@ public class BankAccountTest {
 
         List<Double> expectedTransactions = Arrays.asList(5.0,2.0);
 
-        assertThat(bankAccount.getTransactions()).isEqualTo(expectedTransactions);
+        assertThat(bankAccount.getTransactionsAmount()).isEqualTo(expectedTransactions);
     }
 
     @Test
@@ -90,16 +92,17 @@ public class BankAccountTest {
 
         List<OperationType> expectedTransactionsType = Arrays.asList(OperationType.DEPOSIT,OperationType.WITHDRAWAL,OperationType.DEPOSIT);
 
-        assertThat(bankAccount.getOperationsType()).isEqualTo(expectedTransactionsType);
+        assertThat(bankAccount.getTransactionsType()).isEqualTo(expectedTransactionsType);
     }
 
     @Test
     public void should_store_the_date_of_transaction() throws Exception {
         when(dateProvider.todaysDateAsString()).thenReturn("26-07-2017");
         bankAccount.deposit(2);
+        when(dateProvider.todaysDateAsString()).thenReturn("27-07-2017");
         bankAccount.withdraw(1);
 
-        List<String> expectedTransactionsDate = Arrays.asList("26-07-2017","26-07-2017");
+        List<String> expectedTransactionsDate = Arrays.asList("26-07-2017","27-07-2017");
 
         assertThat(bankAccount.getTransactionsDate()).isEqualTo(expectedTransactionsDate);
     }
