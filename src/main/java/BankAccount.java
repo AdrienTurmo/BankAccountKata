@@ -3,7 +3,7 @@ import exceptions.NotEnoughMoneyException;
 
 
 public class BankAccount {
-    private final OperationsHistory operationsHistory;
+    private OperationsHistory operationsHistory;
     private final OperationsHistoryPrinter operationsHistoryPrinter;
 
     public BankAccount(OperationsHistory operationsHistory, OperationsHistoryPrinter operationsHistoryPrinter) {

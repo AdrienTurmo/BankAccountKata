@@ -1,3 +1,5 @@
+import org.assertj.core.util.Lists;
+
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;

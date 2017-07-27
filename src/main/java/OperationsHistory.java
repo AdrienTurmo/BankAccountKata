@@ -5,7 +5,7 @@ import java.util.List;
 
 public class OperationsHistory {
     private final DateProvider dateProvider;
-    private final List<Operation> operations;
+    private List<Operation> operations;
 
     OperationsHistory(DateProvider dateProvider) {
         this.dateProvider = dateProvider;
@@ -30,6 +30,6 @@ public class OperationsHistory {
     }
 
     List<Operation> getOperations() {
-        return new ArrayList<>(operations);
+        return operations;
     }
 }
