@@ -25,26 +25,25 @@ public class BankAccountTest {
     Printer printer;
     @Mock
     DateProvider dateProvider;
-
-
+    @Mock
+    OperationsHistory operationsHistory;
 
     @Before
     public void setUp() throws Exception {
         operationsHistoryPrinter = new OperationsHistoryPrinter(printer);
-        OperationsHistory operationsHistory = new OperationsHistory(dateProvider);
         bankAccount = new BankAccount(operationsHistory, operationsHistoryPrinter);
     }
 
     @Test
     public void should_create_a_new_bank_account_with_no_money() throws Exception {
-        assertThat(bankAccount.moneyStored()).isEqualTo(0);
+        assertThat(bankAccount.balance()).isEqualTo(0);
     }
 
     @Test
     public void should_store_a_deposit_with_a_positive_amount_of_money() throws Exception {
         bankAccount.deposit(2);
 
-        assertThat(bankAccount.moneyStored()).isEqualTo(2);
+        verify(operationsHistory).addDeposit(2);
     }
 
     @Test
@@ -52,16 +51,18 @@ public class BankAccountTest {
         bankAccount.deposit(2);
         bankAccount.deposit(3.5);
 
-        assertThat(bankAccount.moneyStored()).isEqualTo(5.5);
+        verify(operationsHistory).addDeposit(2);
+        verify(operationsHistory).addDeposit(3.5);
+
     }
 
     @Test
     public void should_withdraw_an_not_empty_account() throws Exception {
         bankAccount.deposit(5);
-
+        when(operationsHistory.balance()).thenReturn(5.);
         bankAccount.withdraw(3.3);
 
-        assertThat(bankAccount.moneyStored()).isEqualTo(1.7);
+        verify(operationsHistory).addWithdrawal(3.3);
     }
 
     @Test(expected = IncorrectAmountException.class)
@@ -83,71 +84,10 @@ public class BankAccountTest {
     }
 
     @Test
-    public void should_store_each_transaction_amount() throws Exception {
-        bankAccount.deposit(5);
-        bankAccount.withdraw(2);
-
-        List<Double> expectedTransactions = Arrays.asList(5.0, 2.0);
-
-        assertThat(bankAccount.allOperationsAmount()).isEqualTo(expectedTransactions);
-    }
-
-    @Test
-    public void should_store_type_of_transaction() throws Exception {
-        bankAccount.deposit(2);
-        bankAccount.withdraw(1);
-        bankAccount.deposit(3);
-
-        List<OperationType> expectedTransactionsType = Arrays.asList(OperationType.DEPOSIT, OperationType.WITHDRAWAL, OperationType.DEPOSIT);
-
-        assertThat(bankAccount.allOperationsType()).isEqualTo(expectedTransactionsType);
-    }
-
-    @Test
-    public void should_store_the_date_of_transaction() throws Exception {
-        when(dateProvider.todaysDateAsString()).thenReturn("26-07-2017");
-        bankAccount.deposit(2);
-        when(dateProvider.todaysDateAsString()).thenReturn("27-07-2017");
-        bankAccount.withdraw(1);
-
-        List<String> expectedTransactionsDate = Arrays.asList("26-07-2017", "27-07-2017");
-
-        assertThat(bankAccount.allOperationsDate()).isEqualTo(expectedTransactionsDate);
-    }
-
-    @Test
-    public void historyPrinter_always_print_header() throws Exception {
-        bankAccount.printOperationsHistory();
-
-        verify(printer).print("DATE | OPERATION | AMOUNT | BALANCE");
-    }
-
-    @Test
     public void historyPrinter_print_a_transaction_after_the_header() throws Exception {
-        when(dateProvider.todaysDateAsString()).thenReturn("26-07-2017");
-        bankAccount.deposit(5);
-
         bankAccount.printOperationsHistory();
 
-        InOrder printerOrder = Mockito.inOrder(printer);
-        printerOrder.verify(printer).print("DATE | OPERATION | AMOUNT | BALANCE");
-        printerOrder.verify(printer).print("26-07-2017 | DEPOSIT | 5.0€ | 5.0€");
+        operationsHistoryPrinter.print(operationsHistory);
     }
 
-    @Test
-    public void historyPrinter_print_transactions_from_newest_to_oldest() throws Exception {
-        when(dateProvider.todaysDateAsString()).thenReturn("26-07-2017");
-        bankAccount.deposit(100);
-        bankAccount.deposit(900);
-        when(dateProvider.todaysDateAsString()).thenReturn("27-07-2017");
-        bankAccount.withdraw(500);
-
-        bankAccount.printOperationsHistory();
-
-        InOrder printerOrder = Mockito.inOrder(printer);
-        printerOrder.verify(printer).print("DATE | OPERATION | AMOUNT | BALANCE");
-        printerOrder.verify(printer).print("27-07-2017 | WITHDRAWAL | 500.0€ | 500.0€");
-        printerOrder.verify(printer).print("26-07-2017 | DEPOSIT | 900.0€ | 1000.0€");
-        printerOrder.verify(printer).print("26-07-2017 | DEPOSIT | 100.0€ | 100.0€");
-    }
 }

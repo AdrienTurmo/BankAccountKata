@@ -13,7 +13,7 @@ public class BankAccount {
         this.operationsHistoryPrinter = operationsHistoryPrinter;
     }
 
-    public double moneyStored() {
+    public double balance() {
         return operationsHistory.balance();
     }
 
@@ -28,7 +28,7 @@ public class BankAccount {
         if (amount < 0) {
             throw new IncorrectAmountException();
         }
-        if (moneyStored()<amount){
+        if (balance()<amount){
             throw new NotEnoughMoneyException();
         }
         operationsHistory.addWithdrawal(amount);
